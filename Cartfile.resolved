@@ -1,0 +1,4 @@
+github "Alamofire/Alamofire" "3.3.1"
+github "bignerdranch/Freddy" "2.0.2"
+github "antitypical/Result" "1.0.2"
+github "Thomvis/BrightFutures" "v3.3.0"
