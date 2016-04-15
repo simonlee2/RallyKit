@@ -19,11 +19,12 @@ class ViewController: UIViewController {
         let rally = Rally(authType: auth)
         rally.authenticateIfNeeded { credential in
             guard let credential = credential else { return }
-            rally.request(.GET, "/subscriptions", credential: credential).responseData { response in
+            rally.request(.GET, "/subscription", credential: credential).responseData { response in
                 guard case .Success(let value) = response.result else { return }
                 
-                let json = try? JSON(data: value)
-                print(json)
+                let json = try? JSON(JSON(data: value).dictionary("Subscription"))
+                let subscription = try? Subscription(json: json!)
+                print(subscription)
             }
         }
     }
@@ -70,9 +71,90 @@ public class Rally {
     
 }
 
-struct Subscription {
-    
+protocol Attributes {
+    var _rallyAPIMajor: Int { get set }
+    var _rallyAPIMinor: Int { get set }
+    var _ref: String { get set }
+    var _refObjectName: String { get set }
+    var _refObjectUUID: String { get set }
+    var _type: String { get set }
 }
+
+class PersistableObject: Attributes, JSONDecodable {
+    // Attributes
+    var _rallyAPIMajor: Int
+    var _rallyAPIMinor: Int
+    var _ref: String
+    var _refObjectName: String
+    var _refObjectUUID: String
+    var _type: String
+    
+    // Persistable
+    var creationDate: String //TODO: Use NSDate
+    var objectID: Int64
+    var objectUUID: String
+    var versionID: Int?
+    
+    required init(json: JSON) throws {
+        _rallyAPIMajor = try json.int("_rallyAPIMajor")
+        _rallyAPIMinor = try json.int("_rallyAPIMinor")
+        _ref = try json.string("_ref")
+        _refObjectName = try json.string("_refObjectName")
+        _refObjectUUID = try json.string("_refObjectUUID")
+        _type = try json.string("_type")
+        
+        creationDate = try json.string("creationDate")
+        objectID = try Int64(json.int("objectID"))
+        objectUUID = try json.string("objectUUID")
+        versionID = try json.int("versionID")
+    }
+}
+
+class Subscription: PersistableObject {
+    var apiKeysEnabled: Bool?
+    var emailEnabled: Bool?
+    var expirationDate: String? //TODO: Use NSDate
+    var JSONPEnabled: Bool?
+    var maximumCustomUserFields: Int64
+    var maximumProjects: Int64
+    var modules: [String]?
+    var name: String
+    var passwordExpirationDays: Int64?
+    var previousPasswordCount: Int64
+    var projectHierarchyEnabled: Bool?
+    var sessionTimeoutSeconds: Int64?
+    var storyHierarchyEnabled: Bool?
+    var storyHierarchyType: String
+    var subscriptionID: Int64
+    var subscriptionType: String
+    var workspaces: [Workspace]?
+    
+    required init(json: JSON) throws {
+        
+        apiKeysEnabled = try json.bool("apiKeysEnabled")
+        emailEnabled = try json.bool("emailEnabled")
+        expirationDate = try json.string("expirationDate")
+        JSONPEnabled = try json.bool("JSONPEnabled")
+        maximumCustomUserFields = try Int64(json.int("maximumCustomUserFields"))
+        maximumProjects = try Int64(json.int("maximumProjects"))
+        let moduleArrays = try json.array("modules")
+        modules = try moduleArrays.map({try $0.string("")})
+        name = try json.string("name")
+        passwordExpirationDays = try Int64(json.int("passwordExpirationDays"))
+        previousPasswordCount = try Int64(json.int("previousPasswordCount"))
+        projectHierarchyEnabled = try json.bool("projectHierarchyEnabled")
+        sessionTimeoutSeconds = try Int64(json.int("sessionTimeoutSeconds"))
+        storyHierarchyEnabled = try json.bool("storyHierarchyEnabled")
+        storyHierarchyType = try json.string("storyHierarchyType")
+        subscriptionID = try Int64(json.int("subscriptionID"))
+        subscriptionType = try json.string("subscriptionType")
+        workspaces = [Workspace]()
+        
+        try super.init(json: json)
+    }
+}
+
+class Workspace {}
 
 protocol Credential {
     var header: [String: String] { get }
