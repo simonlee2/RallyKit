@@ -72,41 +72,41 @@ public class Rally {
 }
 
 protocol Attributes {
-    var _rallyAPIMajor: Int { get set }
-    var _rallyAPIMinor: Int { get set }
+    var _rallyAPIMajor: String { get set }
+    var _rallyAPIMinor: String { get set }
     var _ref: String { get set }
     var _refObjectName: String { get set }
     var _refObjectUUID: String { get set }
-    var _type: String { get set }
+    var _type: String? { get set }
 }
 
 class PersistableObject: Attributes, JSONDecodable {
     // Attributes
-    var _rallyAPIMajor: Int
-    var _rallyAPIMinor: Int
+    var _rallyAPIMajor: String
+    var _rallyAPIMinor: String
     var _ref: String
     var _refObjectName: String
     var _refObjectUUID: String
-    var _type: String
+    var _type: String?
     
     // Persistable
     var creationDate: String //TODO: Use NSDate
     var objectID: Int64
     var objectUUID: String
-    var versionID: Int?
+    var versionID: String?
     
     required init(json: JSON) throws {
-        _rallyAPIMajor = try json.int("_rallyAPIMajor")
-        _rallyAPIMinor = try json.int("_rallyAPIMinor")
+        _rallyAPIMajor = try json.string("_rallyAPIMajor")
+        _rallyAPIMinor = try json.string("_rallyAPIMinor")
         _ref = try json.string("_ref")
         _refObjectName = try json.string("_refObjectName")
         _refObjectUUID = try json.string("_refObjectUUID")
-        _type = try json.string("_type")
+        _type = try json.string("_type", ifNotFound: true)
         
-        creationDate = try json.string("creationDate")
-        objectID = try Int64(json.int("objectID"))
-        objectUUID = try json.string("objectUUID")
-        versionID = try json.int("versionID")
+        creationDate = try json.string("CreationDate")
+        objectID = try Int64(json.int("ObjectID"))
+        objectUUID = try json.string("ObjectUUID")
+        versionID = try json.string("VersionId")
     }
 }
 
@@ -122,7 +122,7 @@ class Subscription: PersistableObject {
     var passwordExpirationDays: Int64?
     var previousPasswordCount: Int64
     var projectHierarchyEnabled: Bool?
-    var sessionTimeoutSeconds: Int64?
+    var sessionTimeoutSeconds: Int?
     var storyHierarchyEnabled: Bool?
     var storyHierarchyType: String
     var subscriptionID: Int64
@@ -131,23 +131,23 @@ class Subscription: PersistableObject {
     
     required init(json: JSON) throws {
         
-        apiKeysEnabled = try json.bool("apiKeysEnabled")
-        emailEnabled = try json.bool("emailEnabled")
-        expirationDate = try json.string("expirationDate")
+        apiKeysEnabled = try json.bool("ApiKeysEnabled")
+        emailEnabled = try json.bool("EmailEnabled")
+        expirationDate = try json.string("ExpirationDate", ifNull: true)
         JSONPEnabled = try json.bool("JSONPEnabled")
-        maximumCustomUserFields = try Int64(json.int("maximumCustomUserFields"))
-        maximumProjects = try Int64(json.int("maximumProjects"))
-        let moduleArrays = try json.array("modules")
-        modules = try moduleArrays.map({try $0.string("")})
-        name = try json.string("name")
-        passwordExpirationDays = try Int64(json.int("passwordExpirationDays"))
-        previousPasswordCount = try Int64(json.int("previousPasswordCount"))
-        projectHierarchyEnabled = try json.bool("projectHierarchyEnabled")
-        sessionTimeoutSeconds = try Int64(json.int("sessionTimeoutSeconds"))
-        storyHierarchyEnabled = try json.bool("storyHierarchyEnabled")
-        storyHierarchyType = try json.string("storyHierarchyType")
-        subscriptionID = try Int64(json.int("subscriptionID"))
-        subscriptionType = try json.string("subscriptionType")
+        maximumCustomUserFields = try Int64(json.int("MaximumCustomUserFields"))
+        maximumProjects = try Int64(json.int("MaximumProjects"))
+        let moduleArrays = try json.string("Modules")
+        modules = moduleArrays.componentsSeparatedByString(",")
+        name = try json.string("Name")
+        passwordExpirationDays = try Int64(json.int("PasswordExpirationDays"))
+        previousPasswordCount = try Int64(json.int("PreviousPasswordCount"))
+        projectHierarchyEnabled = try json.bool("ProjectHierarchyEnabled")
+        sessionTimeoutSeconds = try json.int("SessionTimeoutSeconds", ifNull: true)
+        storyHierarchyEnabled = try json.bool("StoryHierarchyEnabled")
+        storyHierarchyType = try json.string("StoryHierarchyType")
+        subscriptionID = try Int64(json.int("SubscriptionID"))
+        subscriptionType = try json.string("SubscriptionType")
         workspaces = [Workspace]()
         
         try super.init(json: json)
