@@ -14,6 +14,13 @@
 		F47340E21CC054330044844C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47340E01CC054330044844C /* LaunchScreen.storyboard */; };
 		F473410B1CC058F70044844C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F47341071CC058F70044844C /* Alamofire.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		F47341151CC06AC70044844C /* Freddy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F47341131CC06AC70044844C /* Freddy.framework */; };
+		F473411A1CC2C0420044844C /* RallyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47341191CC2C0420044844C /* RallyError.swift */; };
+		F473411C1CC2C0A50044844C /* RallyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F473411B1CC2C0A50044844C /* RallyService.swift */; };
+		F473411E1CC2C1120044844C /* PersistableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F473411D1CC2C1120044844C /* PersistableObject.swift */; };
+		F47341201CC2C1490044844C /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F473411F1CC2C1490044844C /* Subscription.swift */; };
+		F47341241CC2C1960044844C /* Credential.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47341231CC2C1960044844C /* Credential.swift */; };
+		F47341261CC2C2AC0044844C /* Rally.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47341251CC2C2AC0044844C /* Rally.swift */; };
+		F47341281CC2C2E50044844C /* RallyAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47341271CC2C2E50044844C /* RallyAuthentication.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +33,13 @@
 		F47340E31CC054330044844C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F47341071CC058F70044844C /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		F47341131CC06AC70044844C /* Freddy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Freddy.framework; path = Carthage/Build/iOS/Freddy.framework; sourceTree = "<group>"; };
+		F47341191CC2C0420044844C /* RallyError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RallyError.swift; path = Rally/RallyKit/RallyError.swift; sourceTree = "<group>"; };
+		F473411B1CC2C0A50044844C /* RallyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RallyService.swift; sourceTree = "<group>"; };
+		F473411D1CC2C1120044844C /* PersistableObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistableObject.swift; sourceTree = "<group>"; };
+		F473411F1CC2C1490044844C /* Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
+		F47341231CC2C1960044844C /* Credential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credential.swift; sourceTree = "<group>"; };
+		F47341251CC2C2AC0044844C /* Rally.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rally.swift; sourceTree = "<group>"; };
+		F47341271CC2C2E50044844C /* RallyAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RallyAuthentication.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +58,7 @@
 		F47340CB1CC054330044844C = {
 			isa = PBXGroup;
 			children = (
+				F47341181CC2C0120044844C /* RallyKit */,
 				F47341131CC06AC70044844C /* Freddy.framework */,
 				F47341071CC058F70044844C /* Alamofire.framework */,
 				F47340D61CC054330044844C /* Rally */,
@@ -70,6 +85,20 @@
 				F47340E31CC054330044844C /* Info.plist */,
 			);
 			path = Rally;
+			sourceTree = "<group>";
+		};
+		F47341181CC2C0120044844C /* RallyKit */ = {
+			isa = PBXGroup;
+			children = (
+				F47341191CC2C0420044844C /* RallyError.swift */,
+				F473411B1CC2C0A50044844C /* RallyService.swift */,
+				F473411D1CC2C1120044844C /* PersistableObject.swift */,
+				F473411F1CC2C1490044844C /* Subscription.swift */,
+				F47341231CC2C1960044844C /* Credential.swift */,
+				F47341251CC2C2AC0044844C /* Rally.swift */,
+				F47341271CC2C2E50044844C /* RallyAuthentication.swift */,
+			);
+			name = RallyKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,8 +193,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F47341201CC2C1490044844C /* Subscription.swift in Sources */,
+				F47341281CC2C2E50044844C /* RallyAuthentication.swift in Sources */,
+				F47341241CC2C1960044844C /* Credential.swift in Sources */,
+				F47341261CC2C2AC0044844C /* Rally.swift in Sources */,
 				F47340DA1CC054330044844C /* ViewController.swift in Sources */,
 				F47340D81CC054330044844C /* AppDelegate.swift in Sources */,
+				F473411E1CC2C1120044844C /* PersistableObject.swift in Sources */,
+				F473411C1CC2C0A50044844C /* RallyService.swift in Sources */,
+				F473411A1CC2C0420044844C /* RallyError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
