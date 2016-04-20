@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import BrightFutures
 
 class RallyService {
     var authType: RallyAuthType
@@ -37,6 +38,13 @@ class RallyService {
             .responseData(completionHandler: completion)
     }
     
+    static func authenticateAsync(encodedCredentials: String?) -> Future<NSData, NSError> {
+        let header = basicAuthenticationHeader(encodedCredentials)
+        return Alamofire
+            .request(.GET, RallyService.authenticateURL, headers: header)
+            .responseData()
+    }
+    
     func authenticateIfNeeded(completion: (Credential?) -> ()) {
         if let credential = credential {
             completion(credential)
@@ -48,24 +56,49 @@ class RallyService {
         }
     }
     
+    func authenticateIfNeededAsync() -> Future<Credential, NSError> {
+        if let credential = credential {
+            return Future(value: credential)
+        } else {
+            return authType.requestCredientialAsync()
+        }
+    }
+    
     // MARK: Request wrapper with credentials
-    func request(method: Alamofire.Method, _ endPoint: String, credential: Credential, completion: Response<NSData, NSError> -> ()) {
+    func request(method: Method, _ endPoint: String, credential: Credential) -> Request {
         let requestURL = RallyService.baseURL + endPoint
-        Alamofire
+        return Alamofire
             .request(method, requestURL, parameters: credential.parameters, headers: credential.header)
-            .responseData(completionHandler: completion)
+    }
+    
+    func requestCompletion(method: Method, _ endPoint: String, credential: Credential, completion: Response<NSData, NSError> -> ()) {
+        request(method, endPoint, credential: credential).responseData(completionHandler: completion)
+    }
+    
+    func requestAsync(method: Method, _ endPoint: String, credential: Credential) -> Future<NSData, NSError> {
+        return request(method, endPoint, credential: credential).responseData()
     }
     
     // MARK: Request wrapper around credentials
-    func request(method: Alamofire.Method, _ endPoint: String, completion: Response<NSData, NSError> -> ()) {
+    func request(method: Method, _ endPoint: String, completion: Response<NSData, NSError> -> ()) {
         authenticateIfNeeded { credential in
             guard let credential = credential else { return }
-            self.request(method, endPoint, credential: credential, completion: completion)
+            self.requestCompletion(method, endPoint, credential: credential, completion: completion)
         }
-    }    
+    }
+    
+    func requestAsync(method: Method, _ endPoint: String) -> Future<NSData, NSError> {
+        return authenticateIfNeededAsync().flatMap { credential in
+            return self.requestAsync(method, endPoint, credential: credential)
+        }
+    }
     
     func get(endPoint: String, completion: Response<NSData, NSError> -> ()) {
         request(.GET, endPoint, completion: completion)
+    }
+    
+    func getAsync(endPoint: String) -> Future<NSData, NSError> {
+        return requestAsync(.GET, endPoint)
     }
 }
 
@@ -112,13 +145,42 @@ extension RallyService {
         get("/project", completion: completion)
     }
     
+    func fetchProjects() -> Future<NSData, NSError> {
+        return getAsync("/project")
+    }
+    
     func fetchDefects(queryString: String?, projectString: String?, completion: Response<NSData, NSError> -> ()) {
         let string = "?" + [queryString, projectString].flatMap({$0}).joinWithSeparator("&")
         let endpointWithQuery = "/defect" + string
         get(endpointWithQuery.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!, completion: completion)
     }
     
+    func fetchDefectsAsync(queryString: String?, projectString: String?) -> Future<NSData, NSError> {
+        let string = "?" + [queryString, projectString].flatMap({$0}).joinWithSeparator("&")
+        let endpointWithQuery = "/defect" + string
+        return getAsync(endpointWithQuery.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)
+    }
+    
     func fetchDefect(defectID: String, completion: Response<NSData, NSError> -> ()) {
         get("/defect/\(defectID)", completion: completion)
+    }
+    
+    func fetchDefectAsync(defectID: String) -> Future<NSData, NSError> {
+        return getAsync("/defect/\(defectID)")
+    }
+}
+
+extension Request {
+    func responseData() -> Future<NSData, NSError> {
+        let promise = Promise<NSData, NSError>()
+        self.responseData { response in
+            switch response.result {
+            case .Failure(let error):
+                promise.tryFailure(error)
+            case .Success(let value):
+                promise.trySuccess(value)
+            }
+        }
+        return promise.future
     }
 }
