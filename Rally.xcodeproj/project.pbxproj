@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F46298A81CC7261D00BECEAB /* BrightFutures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46298A71CC7261D00BECEAB /* BrightFutures.framework */; };
+		F46298AA1CC7265F00BECEAB /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46298A91CC7265F00BECEAB /* Result.framework */; };
 		F47340D81CC054330044844C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47340D71CC054330044844C /* AppDelegate.swift */; };
 		F47340DA1CC054330044844C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47340D91CC054330044844C /* ViewController.swift */; };
 		F47340DD1CC054330044844C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47340DB1CC054330044844C /* Main.storyboard */; };
@@ -24,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F46298A71CC7261D00BECEAB /* BrightFutures.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BrightFutures.framework; path = Carthage/Build/iOS/BrightFutures.framework; sourceTree = "<group>"; };
+		F46298A91CC7265F00BECEAB /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		F47340D41CC054330044844C /* Rally.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rally.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F47340D71CC054330044844C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F47340D91CC054330044844C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +53,8 @@
 			files = (
 				F473410B1CC058F70044844C /* Alamofire.framework in Frameworks */,
 				F47341151CC06AC70044844C /* Freddy.framework in Frameworks */,
+				F46298A81CC7261D00BECEAB /* BrightFutures.framework in Frameworks */,
+				F46298AA1CC7265F00BECEAB /* Result.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +64,8 @@
 		F47340CB1CC054330044844C = {
 			isa = PBXGroup;
 			children = (
+				F46298A91CC7265F00BECEAB /* Result.framework */,
+				F46298A71CC7261D00BECEAB /* BrightFutures.framework */,
 				F47341181CC2C0120044844C /* RallyKit */,
 				F47341131CC06AC70044844C /* Freddy.framework */,
 				F47341071CC058F70044844C /* Alamofire.framework */,
@@ -178,6 +186,8 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Freddy.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/BrightFutures.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
 			);
 			name = Carthage;
 			outputPaths = (
