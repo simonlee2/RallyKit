@@ -49,7 +49,7 @@ class RallyService {
     }
     
     // MARK: Request wrapper with credentials
-    func request(method: Alamofire.Method, _ endPoint: String, credential: Credential, completion: (Response<NSData, NSError> -> ())) {
+    func request(method: Alamofire.Method, _ endPoint: String, credential: Credential, completion: Response<NSData, NSError> -> ()) {
         let requestURL = RallyService.baseURL + endPoint
         Alamofire
             .request(method, requestURL, parameters: credential.parameters, headers: credential.header)
@@ -57,14 +57,68 @@ class RallyService {
     }
     
     // MARK: Request wrapper around credentials
-    func request(method: Alamofire.Method, _ endPoint: String, completion: (Response<NSData, NSError>) -> ()) {
+    func request(method: Alamofire.Method, _ endPoint: String, completion: Response<NSData, NSError> -> ()) {
         authenticateIfNeeded { credential in
             guard let credential = credential else { return }
             self.request(method, endPoint, credential: credential, completion: completion)
         }
     }    
     
-    func get(endPoint: String, completion: (Response<NSData, NSError> -> ())) {
+    func get(endPoint: String, completion: Response<NSData, NSError> -> ()) {
         request(.GET, endPoint, completion: completion)
+    }
+}
+
+enum DefectState: CustomStringConvertible {
+    case Submitted
+    case Open
+    case Fixed
+    case Closed
+    case ReOpened
+    case WontFix
+    case Approved
+    case Deferred
+    case KeepWatch
+    case CannotReproduce
+    
+    var description: String {
+        switch self {
+        case .Submitted:
+            return "Submitted"
+        case .Open:
+            return "Open"
+        case .Fixed:
+            return "Fixed"
+        case .Closed:
+            return "Closed"
+        case .ReOpened:
+            return "Re-Opened"
+        case .WontFix:
+            return "Won't Fix"
+        case .Approved:
+            return "Approved"
+        case .Deferred:
+            return "Deferred"
+        case .KeepWatch:
+            return "Keep Watch"
+        case .CannotReproduce:
+            return "Cannot Reproduce"
+        }
+    }
+}
+
+extension RallyService {
+    func fetchProjects(completion: Response<NSData, NSError> -> ()) {
+        get("/project", completion: completion)
+    }
+    
+    func fetchDefects(queryString: String?, projectString: String?, completion: Response<NSData, NSError> -> ()) {
+        let string = "?" + [queryString, projectString].flatMap({$0}).joinWithSeparator("&")
+        let endpointWithQuery = "/defect" + string
+        get(endpointWithQuery.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!, completion: completion)
+    }
+    
+    func fetchDefect(defectID: String, completion: Response<NSData, NSError> -> ()) {
+        get("/defect/\(defectID)", completion: completion)
     }
 }
