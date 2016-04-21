@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import Freddy
+import BrightFutures
 
 class ViewController: UIViewController {
     @IBOutlet weak var endPointTextField: UITextField! {
@@ -56,28 +57,51 @@ class ViewController: UIViewController {
         
         let defectString = "query=(State != \"Closed\")"
         let projectString = "project=https://rally1.rallydev.com/slm/webservice/v2.0/project/35472160948"
+//        
+//        rally.fetchDefects(defectString, projectString: projectString, completion: parseResponse { json in
+//                let urls = try self.defectURLs(try self.defects(json))
+//                urls.forEach { url in
+//                    self.mapDefectURLToDefectNumber(url) { number in
+//                        print(number)
+//                    }
+//                }
+//            })
         
-        rally.fetchDefects(defectString, projectString: projectString, completion: parseResponse { json in
-                let urls = try self.defectURLs(try self.defects(json))
-                urls.forEach { url in
-                    self.mapDefectURLToDefectNumber(url) { number in
+        rally.fetchDefectsAsync(defectString, projectString: projectString)
+            .flatMap(parseReponseAsync)
+            .flatMap(defectsAsync)
+            .flatMap(defectURLsAsync)
+            .onSuccess { urls in
+                let futures = urls.map(self.mapDefectURLToDefectNumberAsync)
+                futures.forEach { future in
+                    future.onSuccess { number in
                         print(number)
                     }
                 }
-            })
-        
+        }
+//            .map(try? defectURLs)
+//            .flatMap(mapDefectURLToDefectNumberAsync)
         
         
         
         // Get workspace with id
 //        rally.get("/workspace/2952460547/projects", completion: handleResponse)
-        
+
 //        rally.get("/project/31939943023", completion: handleResponse)
         
         // Get defects
 //        rally.get("/defect", completion: handleResponse)
         
 //        rally.get("/defect?project=\(RallyService.baseURL)/project/35472160948", completion: handleResponse)
+    }
+    
+    func parseReponseAsync(data: NSData) -> Future<JSON, NSError> {
+        do {
+            let json = try JSON(data: data)
+            return Future(value: json)
+        } catch let error as NSError {
+            return Future(error: error)
+        }
     }
     
     func mapDefectURLToDefectNumber(url: String, completion: (String) -> ()) {
@@ -89,13 +113,41 @@ class ViewController: UIViewController {
                 })
     }
     
+    func mapDefectURLToDefectNumberAsync(url: String) -> Future<String, NSError> {
+        return Alamofire
+            .request(.GET, url)
+            .responseData()
+            .flatMap(parseReponseAsync)
+            .map { json in
+                return try! self.defectNumber(json)
+        }
+    }
+    
     func defects(json: JSON) throws -> [JSON] {
         return try json.array("QueryResult", "Results")
+    }
+    
+    func defectsAsync(json: JSON) -> Future<[JSON], NSError> {
+        do {
+            let defectJSONs = try defects(json)
+            return Future(value: defectJSONs)
+        } catch let error as NSError {
+            return Future(error: error)
+        }
     }
     
     func defectURLs(defects: [JSON]) throws -> [String] {
         return try defects.map { defect in
             try defect.string("_ref")
+        }
+    }
+    
+    func defectURLsAsync(defects: [JSON]) -> Future<[String], NSError> {
+        do {
+            let urls = try defectURLs(defects)
+            return Future(value: urls)
+        } catch let error as NSError {
+            return Future(error: error)
         }
     }
     
