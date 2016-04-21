@@ -71,14 +71,17 @@ class ViewController: UIViewController {
             .flatMap(parseReponseAsync)
             .flatMap(defectsAsync)
             .flatMap(defectURLsAsync)
-            .onSuccess { urls in
-                let futures = urls.map(self.mapDefectURLToDefectNumberAsync)
-                futures.forEach { future in
-                    future.onSuccess { number in
-                        print(number)
-                    }
-                }
+            .flatMap({ $0.traverse(f: self.mapDefectURLToDefectNumberAsync)})
+            .onSuccess { numbers in
+                print(numbers)
         }
+//                let futures = urls.map(self.mapDefectURLToDefectNumberAsync)
+//                futures.forEach { future in
+//                    future.onSuccess { number in
+//                        print(number)
+//                    }
+//                }
+        
 //            .map(try? defectURLs)
 //            .flatMap(mapDefectURLToDefectNumberAsync)
         
