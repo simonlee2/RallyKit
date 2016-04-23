@@ -10,6 +10,7 @@
 		F46298A81CC7261D00BECEAB /* BrightFutures.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46298A71CC7261D00BECEAB /* BrightFutures.framework */; };
 		F46298AA1CC7265F00BECEAB /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46298A91CC7265F00BECEAB /* Result.framework */; };
 		F46298AC1CCBF41700BECEAB /* DefectState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46298AB1CCBF41700BECEAB /* DefectState.swift */; };
+		F46298AE1CCBFE9700BECEAB /* Defect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46298AD1CCBFE9700BECEAB /* Defect.swift */; };
 		F47340D81CC054330044844C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47340D71CC054330044844C /* AppDelegate.swift */; };
 		F47340DA1CC054330044844C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47340D91CC054330044844C /* ViewController.swift */; };
 		F47340DD1CC054330044844C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47340DB1CC054330044844C /* Main.storyboard */; };
@@ -30,6 +31,7 @@
 		F46298A71CC7261D00BECEAB /* BrightFutures.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BrightFutures.framework; path = Carthage/Build/iOS/BrightFutures.framework; sourceTree = "<group>"; };
 		F46298A91CC7265F00BECEAB /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 		F46298AB1CCBF41700BECEAB /* DefectState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefectState.swift; sourceTree = "<group>"; };
+		F46298AD1CCBFE9700BECEAB /* Defect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defect.swift; sourceTree = "<group>"; };
 		F47340D41CC054330044844C /* Rally.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rally.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F47340D71CC054330044844C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F47340D91CC054330044844C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				F47341231CC2C1960044844C /* Credential.swift */,
 				F47341251CC2C2AC0044844C /* Client.swift */,
 				F47341271CC2C2E50044844C /* RallyAuthentication.swift */,
+				F46298AD1CCBFE9700BECEAB /* Defect.swift */,
 			);
 			name = RallyKit;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 				F47341261CC2C2AC0044844C /* Client.swift in Sources */,
 				F47340DA1CC054330044844C /* ViewController.swift in Sources */,
 				F47340D81CC054330044844C /* AppDelegate.swift in Sources */,
+				F46298AE1CCBFE9700BECEAB /* Defect.swift in Sources */,
 				F473411E1CC2C1120044844C /* PersistableObject.swift in Sources */,
 				F473411C1CC2C0A50044844C /* RallyService.swift in Sources */,
 				F473411A1CC2C0420044844C /* RallyError.swift in Sources */,

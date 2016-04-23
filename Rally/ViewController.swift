@@ -40,10 +40,18 @@ class ViewController: UIViewController {
             .flatMap({ data in self.futurify({try JSON(data: data)})})
             .flatMap(defectsAsync)
             .flatMap(defectURLsAsync)
-            .flatMap({ $0.traverse(f: self.mapDefectURLToDefectNumberAsync)})
-            .onSuccess { numbers in
-                print(numbers)
+            .map({$0.first!})
+            .flatMap(defectDetail)
+            .onSuccess { json in
+                print(json.prettyString)
+                let defectJson = try! json["Defect"]
+                let defect = try? Defect(json: defectJson!)
+                dump(defect)
         }
+//            .flatMap({ $0.traverse(f: self.mapDefectURLToDefectNumberAsync)})
+//            .onSuccess { numbers in
+//                print(numbers)
+//        }
     }
     
     func futurify<T>(f: () throws -> T) -> Future<T, NSError> {
@@ -73,11 +81,15 @@ class ViewController: UIViewController {
                 })
     }
     
-    func mapDefectURLToDefectNumberAsync(url: String) -> Future<String, NSError> {
+    func defectDetail(url: String) -> Future<JSON, NSError> {
         return Alamofire
             .request(.GET, url)
             .responseData()
             .flatMap(parseReponseAsync)
+    }
+    
+    func mapDefectURLToDefectNumberAsync(url: String) -> Future<String, NSError> {
+        return defectDetail(url)
             .map { json in
                 return try! self.defectNumber(json)
         }
