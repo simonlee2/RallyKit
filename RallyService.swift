@@ -61,6 +61,10 @@ class RallyService {
     func getAsync(endPoint: String) -> Future<NSData, NSError> {
         return requestAsync(.GET, endPoint)
     }
+    
+    func getURL(url: String) -> Future<NSData, NSError> {
+        return Alamofire.request(.GET, url).responseData()
+    }
 }
 
 /// Generic wrapper on top of Alamofire requests
@@ -110,6 +114,8 @@ extension RallyService {
         }
     }
 }
+
+
 
 /// Helper extension
 extension Request {
