@@ -24,17 +24,84 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let defectString = "query=(State != \"Closed\")"
+        let allMappings = KanbanState.allValues
+        
+//        let defectString = "query=((State = \"Open\") and (ScheduleState = \"In-Progress\"))"
         let projectString = "project=https://rally1.rallydev.com/slm/webservice/v2.0/project/35472160948"
         
-        client.defects(defectString, projectQuery: projectString).onSuccess { defects in
-            print("\(defects.count) non-closed defects")
-        }.onFailure { error in
-            print(error)
+        allMappings.forEach { kanbanState in
+            self.defects(kanbanState: kanbanState, projectQuery: projectString).onSuccess { defects in
+                self.consoleLog("\(defects.count) in \(kanbanState.rawValue) where (\(kanbanState.mapping.0), \(kanbanState.mapping.1))")
+                defects.forEach({print($0.formattedID)})
+            }.onFailure { error in
+                self.consoleLog("\(error)")
+            }
         }
+        
+//        let defectString = defectQuery(.DevInProgress)
+//        client.defects(defectString, projectQuery: projectString).onSuccess { defects in
+//            print("\(defects.count) open defects")
+//            defects.forEach({print($0.formattedID)})
+//        }.onFailure { error in
+//            print(error)
+//        }
     }
     
+    func consoleLog(log: String) {
+        print(log)
+        self.console.text = self.console.text + "\n\n" + log
+    }
     
+    func defects(kanbanState kanbanState: KanbanState, projectQuery: String) -> Future<[Defect], NSError> {
+        consoleLog("Fetching Defects in: \(kanbanState.rawValue)")
+        let defectString = defectQuery(kanbanState)
+        return client.defects(defectString, projectQuery: projectQuery)
+    }
+    
+    func defectQuery(kanbanState: KanbanState) -> String {
+        let (scheduleState, defectState) = kanbanState.mapping
+        return defectQuery(scheduleState, defectState: defectState)
+    }
+    
+    func defectQuery(scheduleState: ScheduleState, defectState: DefectState) -> String {
+        return "query=((State = \"\(defectState.rawValue)\") and (ScheduleState = \"\(scheduleState.rawValue)\"))"
+    }
+}
+
+enum KanbanState: String {
+    case Undefined = "Undefined"
+    case Defined = "Defined"
+    case DevInProgress = "Dev In-Progress"
+    case DevComplete = "Dev Complete"
+    case QAReady = "QA Ready"
+    case QAInProgress = "QA In-Progress"
+    case QAComplete = "QA Complete"
+    case Approved = "Approved"
+    
+    static var allValues: [KanbanState] {
+        return [.Undefined, .Defined, .DevInProgress, .DevComplete, .QAReady, .QAInProgress, .QAComplete, .Approved]
+    }
+    
+    var mapping: (ScheduleState, DefectState) {
+        switch self {
+        case .Undefined:
+            return (.Undefined, .Submitted)
+        case .Defined:
+            return (.Defined, .Submitted)
+        case .DevComplete:
+            return (.Completed, .Open)
+        case .DevInProgress:
+            return (.InProgress, .Open)
+        case .QAReady:
+            return (.Completed, .Fixed)
+        case .QAInProgress:
+            return (.InProgress, .Fixed)
+        case .QAComplete:
+            return (.Completed, .Closed)
+        case .Approved:
+            return (.Completed, .Approved)
+        }
+    }
 }
 
 extension ViewController: UITextFieldDelegate {
@@ -47,8 +114,8 @@ extension ViewController: UITextFieldDelegate {
             }
         }.onSuccess{ json in
             let prettyString = json.prettyString
-            print(prettyString)
-            self.console.text = self.console.text + "\n\n" + prettyString
+            self.consoleLog(prettyString)
+            
         }.onFailure { error in
             print(error)
         }
