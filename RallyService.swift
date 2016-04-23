@@ -12,7 +12,6 @@ import BrightFutures
 class RallyService {
     var authType: RallyAuthType
     var credential: Credential?
-    var securityToken: String?
     
     init(authType: RallyAuthType) {
         self.authType = authType
@@ -23,13 +22,15 @@ class RallyService {
         return baseURL + "/security/authorize"
     }
     
-    // MARK: Authentication
+    // MARK: BA Header
     
     private static func basicAuthenticationHeader(encodedCredentials: String?) -> [String: String] {
         guard let encodedCredentials = encodedCredentials else { return [:] }
         
         return ["Authorization": encodedCredentials]
     }
+    
+    // MARK: Authentication
     
     static func authenticate(encodedCredentials: String?, completion: (Response<NSData, NSError> -> ())) {
         let header = basicAuthenticationHeader(encodedCredentials)
@@ -44,6 +45,27 @@ class RallyService {
             .request(.GET, RallyService.authenticateURL, headers: header)
             .responseData()
     }
+    
+    // MARK: Request wrapper with credentials
+    func request(method: Method, _ endPoint: String, credential: Credential) -> Request {
+        let requestURL = RallyService.baseURL + endPoint
+        return Alamofire
+            .request(method, requestURL, parameters: credential.parameters, headers: credential.header)
+    }
+    
+    // MARK: HTTP GET
+    func get(endPoint: String, completion: Response<NSData, NSError> -> ()) {
+        request(.GET, endPoint, completion: completion)
+    }
+    
+    func getAsync(endPoint: String) -> Future<NSData, NSError> {
+        return requestAsync(.GET, endPoint)
+    }
+}
+
+/// Generic wrapper on top of Alamofire requests
+extension RallyService {
+    // MARK: Authenticate If Needed
     
     func authenticateIfNeeded(completion: (Credential?) -> ()) {
         if let credential = credential {
@@ -64,12 +86,7 @@ class RallyService {
         }
     }
     
-    // MARK: Request wrapper with credentials
-    func request(method: Method, _ endPoint: String, credential: Credential) -> Request {
-        let requestURL = RallyService.baseURL + endPoint
-        return Alamofire
-            .request(method, requestURL, parameters: credential.parameters, headers: credential.header)
-    }
+    // MARK: Handle Request
     
     func requestCompletion(method: Method, _ endPoint: String, credential: Credential, completion: Response<NSData, NSError> -> ()) {
         request(method, endPoint, credential: credential).responseData(completionHandler: completion)
@@ -92,85 +109,12 @@ class RallyService {
             return self.requestAsync(method, endPoint, credential: credential)
         }
     }
-    
-    func get(endPoint: String, completion: Response<NSData, NSError> -> ()) {
-        request(.GET, endPoint, completion: completion)
-    }
-    
-    func getAsync(endPoint: String) -> Future<NSData, NSError> {
-        return requestAsync(.GET, endPoint)
-    }
 }
 
-enum DefectState: CustomStringConvertible {
-    case Submitted
-    case Open
-    case Fixed
-    case Closed
-    case ReOpened
-    case WontFix
-    case Approved
-    case Deferred
-    case KeepWatch
-    case CannotReproduce
-    
-    var description: String {
-        switch self {
-        case .Submitted:
-            return "Submitted"
-        case .Open:
-            return "Open"
-        case .Fixed:
-            return "Fixed"
-        case .Closed:
-            return "Closed"
-        case .ReOpened:
-            return "Re-Opened"
-        case .WontFix:
-            return "Won't Fix"
-        case .Approved:
-            return "Approved"
-        case .Deferred:
-            return "Deferred"
-        case .KeepWatch:
-            return "Keep Watch"
-        case .CannotReproduce:
-            return "Cannot Reproduce"
-        }
-    }
-}
-
-extension RallyService {
-    func fetchProjects(completion: Response<NSData, NSError> -> ()) {
-        get("/project", completion: completion)
-    }
-    
-    func fetchProjects() -> Future<NSData, NSError> {
-        return getAsync("/project")
-    }
-    
-    func fetchDefects(queryString: String?, projectString: String?, completion: Response<NSData, NSError> -> ()) {
-        let string = "?" + [queryString, projectString].flatMap({$0}).joinWithSeparator("&")
-        let endpointWithQuery = "/defect" + string
-        get(endpointWithQuery.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!, completion: completion)
-    }
-    
-    func fetchDefectsAsync(queryString: String?, projectString: String?) -> Future<NSData, NSError> {
-        let string = "?" + [queryString, projectString].flatMap({$0}).joinWithSeparator("&")
-        let endpointWithQuery = "/defect" + string
-        return getAsync(endpointWithQuery.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)
-    }
-    
-    func fetchDefect(defectID: String, completion: Response<NSData, NSError> -> ()) {
-        get("/defect/\(defectID)", completion: completion)
-    }
-    
-    func fetchDefectAsync(defectID: String) -> Future<NSData, NSError> {
-        return getAsync("/defect/\(defectID)")
-    }
-}
-
+/// Helper extension
 extension Request {
+    
+    // MARK: NSData
     func responseData() -> Future<NSData, NSError> {
         let promise = Promise<NSData, NSError>()
         self.responseData { response in

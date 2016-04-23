@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     }
     @IBOutlet weak var console: UITextView!
     
-    let rally = RallyService(authType: RallyAuthType.Username(username: "slee@solstice-consulting.com", password: "Wayla87091"))
+    let rally = Client(authType: RallyAuthType.Username(username: "slee@solstice-consulting.com", password: "Wayla87091"))
     
     func handleResponse(response: Response<NSData, NSError>) {
         guard case .Success(let value) = response.result else { return }
@@ -32,70 +32,27 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        
-//        rally.get("/subscription") { response in
-//            guard case .Success(let value) = response.result else { return }
-//            
-//            let json = try? JSON(JSON(data: value).dictionary("Subscription"))
-//            let subscription = try? Subscription(json: json!)
-//        }
-//        
-        // Get all workspaces
-//        rally.fetchProjects { response in
-//            guard case .Success(let value) = response.result else { return }
-//            
-//            do {
-//                let json = try JSON(data: value)
-////                print(json.prettyString)
-//                let projects = try json.array("QueryResult", "Results")
-//                let projectRefs = try self.projectsReferences(projects)
-//                print(projectRefs)
-//            } catch let error {
-//                print(error)
-//            }
-//        }
         
         let defectString = "query=(State != \"Closed\")"
         let projectString = "project=https://rally1.rallydev.com/slm/webservice/v2.0/project/35472160948"
-//        
-//        rally.fetchDefects(defectString, projectString: projectString, completion: parseResponse { json in
-//                let urls = try self.defectURLs(try self.defects(json))
-//                urls.forEach { url in
-//                    self.mapDefectURLToDefectNumber(url) { number in
-//                        print(number)
-//                    }
-//                }
-//            })
         
         rally.fetchDefectsAsync(defectString, projectString: projectString)
-            .flatMap(parseReponseAsync)
+            .flatMap({ data in self.futurify({try JSON(data: data)})})
             .flatMap(defectsAsync)
             .flatMap(defectURLsAsync)
             .flatMap({ $0.traverse(f: self.mapDefectURLToDefectNumberAsync)})
             .onSuccess { numbers in
                 print(numbers)
         }
-//                let futures = urls.map(self.mapDefectURLToDefectNumberAsync)
-//                futures.forEach { future in
-//                    future.onSuccess { number in
-//                        print(number)
-//                    }
-//                }
-        
-//            .map(try? defectURLs)
-//            .flatMap(mapDefectURLToDefectNumberAsync)
-        
-        
-        
-        // Get workspace with id
-//        rally.get("/workspace/2952460547/projects", completion: handleResponse)
-
-//        rally.get("/project/31939943023", completion: handleResponse)
-        
-        // Get defects
-//        rally.get("/defect", completion: handleResponse)
-        
-//        rally.get("/defect?project=\(RallyService.baseURL)/project/35472160948", completion: handleResponse)
+    }
+    
+    func futurify<T>(f: () throws -> T) -> Future<T, NSError> {
+        do {
+            let value = try f()
+            return Future(value: value)
+        } catch let error as NSError {
+            return Future(error: error)
+        }
     }
     
     func parseReponseAsync(data: NSData) -> Future<JSON, NSError> {
@@ -186,12 +143,40 @@ extension ViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(textField: UITextField) {
         guard let endPoint = textField.text else { return }
         self.console.text = self.console.text + "\n\n" + "Getting: \(textField.text)"
-        rally.get(endPoint, completion: handleResponse)
+        rally.service.get(endPoint, completion: handleResponse)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+extension Request {
+    func responseJSON() -> Future<JSON, NSError> {
+        return responseData().flatMap { data in
+            return self.futurify {
+                return try JSON(data: data)
+            }
+        }
+    }
+    
+    func parseReponseAsync(data: NSData) -> Future<JSON, NSError> {
+        do {
+            let json = try JSON(data: data)
+            return Future(value: json)
+        } catch let error as NSError {
+            return Future(error: error)
+        }
+    }
+    
+    func futurify<T>(f: () throws -> T) -> Future<T, NSError> {
+        do {
+            let value = try f()
+            return Future(value: value)
+        } catch let error as NSError {
+            return Future(error: error)
+        }
     }
 }
 

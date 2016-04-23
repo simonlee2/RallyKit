@@ -15,6 +15,8 @@ public enum RallyAuthType {
     case Username(username: String, password: String)
     case APIKey(key: String)
     
+    // MARK: BA encoding
+    
     private var encodedBasicAuthentication: String? {
         guard case .Username(username: let username, password: let password) = self else { return nil }
         
@@ -26,6 +28,8 @@ public enum RallyAuthType {
         let encoded = raw.dataUsingEncoding(NSUTF8StringEncoding)?.base64EncodedStringWithOptions([])
         return "Basic \(encoded!)"
     }
+    
+    // MARK: Request Credential
     
     func requestCredential(completion: (Credential?) -> ()) {
         switch self {
@@ -54,6 +58,7 @@ public enum RallyAuthType {
         }
     }
     
+    // MARK: Create credential based on auth response
     
     func authenticationHandler(response: Response<NSData, NSError>, completion: (Credential?) -> ()) {
         guard case .Success(let data) = response.result,
