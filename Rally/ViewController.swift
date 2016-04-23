@@ -29,14 +29,14 @@ class ViewController: UIViewController {
 //        let defectString = "query=((State = \"Open\") and (ScheduleState = \"In-Progress\"))"
         let projectString = "project=https://rally1.rallydev.com/slm/webservice/v2.0/project/35472160948"
         
-        allMappings.forEach { kanbanState in
-            self.defects(kanbanState: kanbanState, projectQuery: projectString).onSuccess { defects in
-                self.consoleLog("\(defects.count) in \(kanbanState.rawValue) where (\(kanbanState.mapping.0), \(kanbanState.mapping.1))")
-                defects.forEach({print($0.formattedID)})
-            }.onFailure { error in
-                self.consoleLog("\(error)")
-            }
-        }
+//        allMappings.forEach { kanbanState in
+//            self.defects(kanbanState: kanbanState, projectQuery: projectString).onSuccess { defects in
+//                self.consoleLog("\(defects.count) in \(kanbanState.rawValue) where (\(kanbanState.mapping.0), \(kanbanState.mapping.1))")
+//                defects.forEach({print($0.formattedID)})
+//            }.onFailure { error in
+//                self.consoleLog("\(error)")
+//            }
+//        }
         
 //        let defectString = defectQuery(.DevInProgress)
 //        client.defects(defectString, projectQuery: projectString).onSuccess { defects in
@@ -50,6 +50,17 @@ class ViewController: UIViewController {
     func consoleLog(log: String) {
         print(log)
         self.console.text = self.console.text + "\n\n" + log
+    }
+    
+    func defectsInKanbanState(kanbanState: KanbanState) {
+        let projectString = "project=https://rally1.rallydev.com/slm/webservice/v2.0/project/35472160948"
+        
+        self.defects(kanbanState: kanbanState, projectQuery: projectString).onSuccess { defects in
+            self.consoleLog("\(defects.count) in \(kanbanState.rawValue) where (\(kanbanState.mapping.0), \(kanbanState.mapping.1))")
+            defects.forEach({self.consoleLog($0.formattedID)})
+        }.onFailure { error in
+            self.consoleLog("\(error)")
+        }
     }
     
     func defects(kanbanState kanbanState: KanbanState, projectQuery: String) -> Future<[Defect], NSError> {
@@ -106,19 +117,24 @@ enum KanbanState: String {
 
 extension ViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(textField: UITextField) {
-        guard let endPoint = textField.text else { return }
-        self.console.text = self.console.text + "\n\n" + "Getting: \(textField.text)"
-        client.service.getAsync(endPoint).flatMap { data in
-            return self.client.futurify {
-                try JSON(data: data)
-            }
-        }.onSuccess{ json in
-            let prettyString = json.prettyString
-            self.consoleLog(prettyString)
-            
-        }.onFailure { error in
-            print(error)
-        }
+        guard let text = textField.text else { return }
+        guard let kanbanState = KanbanState(rawValue: text) else { return }
+        
+        defectsInKanbanState(kanbanState)
+        
+//        guard let endPoint = textField.text else { return }
+//        self.console.text = self.console.text + "\n\n" + "Getting: \(textField.text)"
+//        client.service.getAsync(endPoint).flatMap { data in
+//            return self.client.futurify {
+//                try JSON(data: data)
+//            }
+//        }.onSuccess{ json in
+//            let prettyString = json.prettyString
+//            self.consoleLog(prettyString)
+//            
+//        }.onFailure { error in
+//            print(error)
+//        }
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
