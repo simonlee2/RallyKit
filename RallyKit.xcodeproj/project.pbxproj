@@ -47,6 +47,8 @@
 		F4D3A6C21CCCABA300431731 /* Client+Defect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A64E1CCC9C3F00431731 /* Client+Defect.swift */; };
 		F4D3A6C31CCCABA300431731 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A64F1CCC9C3F00431731 /* Subscription.swift */; };
 		F4D3A6C41CCCAC8500431731 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4D3A6481CCC9C3F00431731 /* Keys.plist */; };
+		F4D3A6CB1CCCB11A00431731 /* DefectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A6CA1CCCB11A00431731 /* DefectCell.swift */; };
+		F4D3A6CD1CCCB19100431731 /* DefectKanbanCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A6CC1CCCB19100431731 /* DefectKanbanCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +79,8 @@
 		F4D3A6A81CCCA7EC00431731 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F4D3A6AB1CCCA7EC00431731 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F4D3A6AD1CCCA7EC00431731 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F4D3A6CA1CCCB11A00431731 /* DefectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefectCell.swift; sourceTree = "<group>"; };
+		F4D3A6CC1CCCB19100431731 /* DefectKanbanCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefectKanbanCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +155,8 @@
 				F4D3A6A81CCCA7EC00431731 /* Assets.xcassets */,
 				F4D3A6AA1CCCA7EC00431731 /* LaunchScreen.storyboard */,
 				F4D3A6AD1CCCA7EC00431731 /* Info.plist */,
+				F4D3A6CA1CCCB11A00431731 /* DefectCell.swift */,
+				F4D3A6CC1CCCB19100431731 /* DefectKanbanCollectionViewController.swift */,
 			);
 			path = "RallyKit iOS Example";
 			sourceTree = "<group>";
@@ -376,9 +382,11 @@
 			files = (
 				F4D3A6C01CCCAB9F00431731 /* RallyError.swift in Sources */,
 				F4D3A6BD1CCCAB9500431731 /* KanbanState.swift in Sources */,
+				F4D3A6CB1CCCB11A00431731 /* DefectCell.swift in Sources */,
 				F4D3A6C11CCCABA300431731 /* RallyService.swift in Sources */,
 				F4D3A6BA1CCCAB9500431731 /* Defect.swift in Sources */,
 				F4D3A6C31CCCABA300431731 /* Subscription.swift in Sources */,
+				F4D3A6CD1CCCB19100431731 /* DefectKanbanCollectionViewController.swift in Sources */,
 				F4D3A6C21CCCABA300431731 /* Client+Defect.swift in Sources */,
 				F4D3A6A41CCCA7EC00431731 /* ViewController.swift in Sources */,
 				F4D3A6BE1CCCAB9F00431731 /* PersistableObject.swift in Sources */,
