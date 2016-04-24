@@ -23,7 +23,7 @@
 		F4D3A6591CCC9C3F00431731 /* RallyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A64B1CCC9C3F00431731 /* RallyError.swift */; };
 		F4D3A65A1CCC9C3F00431731 /* RallyKit.h in Headers */ = {isa = PBXBuildFile; fileRef = F4D3A64C1CCC9C3F00431731 /* RallyKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F4D3A65B1CCC9C3F00431731 /* RallyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A64D1CCC9C3F00431731 /* RallyService.swift */; };
-		F4D3A65C1CCC9C3F00431731 /* RallyService+Defect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A64E1CCC9C3F00431731 /* RallyService+Defect.swift */; };
+		F4D3A65C1CCC9C3F00431731 /* Client+Defect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A64E1CCC9C3F00431731 /* Client+Defect.swift */; };
 		F4D3A65D1CCC9C3F00431731 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A64F1CCC9C3F00431731 /* Subscription.swift */; };
 		F4D3A6A21CCCA7EC00431731 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A6A11CCCA7EC00431731 /* AppDelegate.swift */; };
 		F4D3A6A41CCCA7EC00431731 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A6A31CCCA7EC00431731 /* ViewController.swift */; };
@@ -44,7 +44,7 @@
 		F4D3A6BF1CCCAB9F00431731 /* RallyAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A64A1CCC9C3F00431731 /* RallyAuthentication.swift */; };
 		F4D3A6C01CCCAB9F00431731 /* RallyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A64B1CCC9C3F00431731 /* RallyError.swift */; };
 		F4D3A6C11CCCABA300431731 /* RallyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A64D1CCC9C3F00431731 /* RallyService.swift */; };
-		F4D3A6C21CCCABA300431731 /* RallyService+Defect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A64E1CCC9C3F00431731 /* RallyService+Defect.swift */; };
+		F4D3A6C21CCCABA300431731 /* Client+Defect.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A64E1CCC9C3F00431731 /* Client+Defect.swift */; };
 		F4D3A6C31CCCABA300431731 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A64F1CCC9C3F00431731 /* Subscription.swift */; };
 		F4D3A6C41CCCAC8500431731 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4D3A6481CCC9C3F00431731 /* Keys.plist */; };
 /* End PBXBuildFile section */
@@ -56,20 +56,20 @@
 		F4D3A6391CCC9B4B00431731 /* BrightFutures.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BrightFutures.framework; path = Carthage/Build/iOS/BrightFutures.framework; sourceTree = "<group>"; };
 		F4D3A63A1CCC9B4B00431731 /* Freddy.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Freddy.framework; path = Carthage/Build/iOS/Freddy.framework; sourceTree = "<group>"; };
 		F4D3A63B1CCC9B4B00431731 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
-		F4D3A6421CCC9C3F00431731 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Client.swift; path = Sources/Client.swift; sourceTree = "<group>"; };
-		F4D3A6431CCC9C3F00431731 /* Credential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Credential.swift; path = Sources/Credential.swift; sourceTree = "<group>"; };
-		F4D3A6441CCC9C3F00431731 /* Defect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Defect.swift; path = Sources/Defect.swift; sourceTree = "<group>"; };
-		F4D3A6451CCC9C3F00431731 /* DefectState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefectState.swift; path = Sources/DefectState.swift; sourceTree = "<group>"; };
-		F4D3A6461CCC9C3F00431731 /* JSON+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "JSON+Util.swift"; path = "Sources/JSON+Util.swift"; sourceTree = "<group>"; };
-		F4D3A6471CCC9C3F00431731 /* KanbanState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KanbanState.swift; path = Sources/KanbanState.swift; sourceTree = "<group>"; };
+		F4D3A6421CCC9C3F00431731 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Client.swift; path = Sources/Client/Client.swift; sourceTree = "<group>"; };
+		F4D3A6431CCC9C3F00431731 /* Credential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Credential.swift; path = Sources/Authentication/Credential.swift; sourceTree = "<group>"; };
+		F4D3A6441CCC9C3F00431731 /* Defect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Defect.swift; path = Sources/Model/Defect.swift; sourceTree = "<group>"; };
+		F4D3A6451CCC9C3F00431731 /* DefectState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DefectState.swift; path = Sources/Model/DefectState.swift; sourceTree = "<group>"; };
+		F4D3A6461CCC9C3F00431731 /* JSON+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "JSON+Util.swift"; path = "Sources/Extension/JSON+Util.swift"; sourceTree = "<group>"; };
+		F4D3A6471CCC9C3F00431731 /* KanbanState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KanbanState.swift; path = Sources/Model/KanbanState.swift; sourceTree = "<group>"; };
 		F4D3A6481CCC9C3F00431731 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Keys.plist; path = Sources/Keys.plist; sourceTree = "<group>"; };
-		F4D3A6491CCC9C3F00431731 /* PersistableObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistableObject.swift; path = Sources/PersistableObject.swift; sourceTree = "<group>"; };
-		F4D3A64A1CCC9C3F00431731 /* RallyAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RallyAuthentication.swift; path = Sources/RallyAuthentication.swift; sourceTree = "<group>"; };
-		F4D3A64B1CCC9C3F00431731 /* RallyError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RallyError.swift; path = Sources/RallyError.swift; sourceTree = "<group>"; };
+		F4D3A6491CCC9C3F00431731 /* PersistableObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistableObject.swift; path = Sources/Model/PersistableObject.swift; sourceTree = "<group>"; };
+		F4D3A64A1CCC9C3F00431731 /* RallyAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RallyAuthentication.swift; path = Sources/Authentication/RallyAuthentication.swift; sourceTree = "<group>"; };
+		F4D3A64B1CCC9C3F00431731 /* RallyError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RallyError.swift; path = Sources/Model/RallyError.swift; sourceTree = "<group>"; };
 		F4D3A64C1CCC9C3F00431731 /* RallyKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RallyKit.h; path = Sources/RallyKit.h; sourceTree = "<group>"; };
-		F4D3A64D1CCC9C3F00431731 /* RallyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RallyService.swift; path = Sources/RallyService.swift; sourceTree = "<group>"; };
-		F4D3A64E1CCC9C3F00431731 /* RallyService+Defect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "RallyService+Defect.swift"; path = "Sources/RallyService+Defect.swift"; sourceTree = "<group>"; };
-		F4D3A64F1CCC9C3F00431731 /* Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Subscription.swift; path = Sources/Subscription.swift; sourceTree = "<group>"; };
+		F4D3A64D1CCC9C3F00431731 /* RallyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RallyService.swift; path = Sources/Service/RallyService.swift; sourceTree = "<group>"; };
+		F4D3A64E1CCC9C3F00431731 /* Client+Defect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Client+Defect.swift"; path = "Sources/Client/Client+Defect.swift"; sourceTree = "<group>"; };
+		F4D3A64F1CCC9C3F00431731 /* Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Subscription.swift; path = Sources/Model/Subscription.swift; sourceTree = "<group>"; };
 		F4D3A69F1CCCA7EC00431731 /* RallyKit iOS Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RallyKit iOS Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4D3A6A11CCCA7EC00431731 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4D3A6A31CCCA7EC00431731 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -130,20 +130,13 @@
 		F4D3A6411CCC9C0000431731 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				F4D3A6421CCC9C3F00431731 /* Client.swift */,
-				F4D3A6431CCC9C3F00431731 /* Credential.swift */,
-				F4D3A6441CCC9C3F00431731 /* Defect.swift */,
-				F4D3A6451CCC9C3F00431731 /* DefectState.swift */,
-				F4D3A6461CCC9C3F00431731 /* JSON+Util.swift */,
-				F4D3A6471CCC9C3F00431731 /* KanbanState.swift */,
+				F4D3A6C51CCCAD5C00431731 /* Client */,
+				F4D3A6C61CCCAD6500431731 /* Authentication */,
+				F4D3A6C71CCCAD7700431731 /* Model */,
+				F4D3A6C91CCCAD8D00431731 /* Extension */,
+				F4D3A6C81CCCAD8500431731 /* Service */,
 				F4D3A6481CCC9C3F00431731 /* Keys.plist */,
-				F4D3A6491CCC9C3F00431731 /* PersistableObject.swift */,
-				F4D3A64A1CCC9C3F00431731 /* RallyAuthentication.swift */,
-				F4D3A64B1CCC9C3F00431731 /* RallyError.swift */,
 				F4D3A64C1CCC9C3F00431731 /* RallyKit.h */,
-				F4D3A64D1CCC9C3F00431731 /* RallyService.swift */,
-				F4D3A64E1CCC9C3F00431731 /* RallyService+Defect.swift */,
-				F4D3A64F1CCC9C3F00431731 /* Subscription.swift */,
 				F4D3A6341CCC9B2800431731 /* Info-iOS.plist */,
 			);
 			name = Sources;
@@ -160,6 +153,53 @@
 				F4D3A6AD1CCCA7EC00431731 /* Info.plist */,
 			);
 			path = "RallyKit iOS Example";
+			sourceTree = "<group>";
+		};
+		F4D3A6C51CCCAD5C00431731 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				F4D3A6421CCC9C3F00431731 /* Client.swift */,
+				F4D3A64E1CCC9C3F00431731 /* Client+Defect.swift */,
+			);
+			name = Client;
+			sourceTree = "<group>";
+		};
+		F4D3A6C61CCCAD6500431731 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				F4D3A6431CCC9C3F00431731 /* Credential.swift */,
+				F4D3A64A1CCC9C3F00431731 /* RallyAuthentication.swift */,
+			);
+			name = Authentication;
+			sourceTree = "<group>";
+		};
+		F4D3A6C71CCCAD7700431731 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F4D3A64B1CCC9C3F00431731 /* RallyError.swift */,
+				F4D3A6441CCC9C3F00431731 /* Defect.swift */,
+				F4D3A6451CCC9C3F00431731 /* DefectState.swift */,
+				F4D3A6471CCC9C3F00431731 /* KanbanState.swift */,
+				F4D3A6491CCC9C3F00431731 /* PersistableObject.swift */,
+				F4D3A64F1CCC9C3F00431731 /* Subscription.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		F4D3A6C81CCCAD8500431731 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				F4D3A64D1CCC9C3F00431731 /* RallyService.swift */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
+		F4D3A6C91CCCAD8D00431731 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				F4D3A6461CCC9C3F00431731 /* JSON+Util.swift */,
+			);
+			name = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -324,7 +364,7 @@
 				F4D3A65D1CCC9C3F00431731 /* Subscription.swift in Sources */,
 				F4D3A6511CCC9C3F00431731 /* Credential.swift in Sources */,
 				F4D3A6501CCC9C3F00431731 /* Client.swift in Sources */,
-				F4D3A65C1CCC9C3F00431731 /* RallyService+Defect.swift in Sources */,
+				F4D3A65C1CCC9C3F00431731 /* Client+Defect.swift in Sources */,
 				F4D3A6551CCC9C3F00431731 /* KanbanState.swift in Sources */,
 				F4D3A6521CCC9C3F00431731 /* Defect.swift in Sources */,
 			);
@@ -339,7 +379,7 @@
 				F4D3A6C11CCCABA300431731 /* RallyService.swift in Sources */,
 				F4D3A6BA1CCCAB9500431731 /* Defect.swift in Sources */,
 				F4D3A6C31CCCABA300431731 /* Subscription.swift in Sources */,
-				F4D3A6C21CCCABA300431731 /* RallyService+Defect.swift in Sources */,
+				F4D3A6C21CCCABA300431731 /* Client+Defect.swift in Sources */,
 				F4D3A6A41CCCA7EC00431731 /* ViewController.swift in Sources */,
 				F4D3A6BE1CCCAB9F00431731 /* PersistableObject.swift in Sources */,
 				F4D3A6BC1CCCAB9500431731 /* JSON+Util.swift in Sources */,
