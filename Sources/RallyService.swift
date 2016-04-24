@@ -47,7 +47,7 @@ class RallyService {
     }
     
     // MARK: Request wrapper with credentials
-    func request(method: Method, _ endPoint: String, credential: Credential) -> Request {
+    func request(method: Alamofire.Method, _ endPoint: String, credential: Credential) -> Request {
         let requestURL = RallyService.baseURL + endPoint
         return Alamofire
             .request(method, requestURL, parameters: credential.parameters, headers: credential.header)
@@ -92,23 +92,23 @@ extension RallyService {
     
     // MARK: Handle Request
     
-    func requestCompletion(method: Method, _ endPoint: String, credential: Credential, completion: Response<NSData, NSError> -> ()) {
+    func requestCompletion(method: Alamofire.Method, _ endPoint: String, credential: Credential, completion: Response<NSData, NSError> -> ()) {
         request(method, endPoint, credential: credential).responseData(completionHandler: completion)
     }
     
-    func requestAsync(method: Method, _ endPoint: String, credential: Credential) -> Future<NSData, NSError> {
+    func requestAsync(method: Alamofire.Method, _ endPoint: String, credential: Credential) -> Future<NSData, NSError> {
         return request(method, endPoint, credential: credential).responseData()
     }
     
     // MARK: Request wrapper around credentials
-    func request(method: Method, _ endPoint: String, completion: Response<NSData, NSError> -> ()) {
+    func request(method: Alamofire.Method, _ endPoint: String, completion: Response<NSData, NSError> -> ()) {
         authenticateIfNeeded { credential in
             guard let credential = credential else { return }
             self.requestCompletion(method, endPoint, credential: credential, completion: completion)
         }
     }
     
-    func requestAsync(method: Method, _ endPoint: String) -> Future<NSData, NSError> {
+    func requestAsync(method: Alamofire.Method, _ endPoint: String) -> Future<NSData, NSError> {
         return authenticateIfNeededAsync().flatMap { credential in
             return self.requestAsync(method, endPoint, credential: credential)
         }

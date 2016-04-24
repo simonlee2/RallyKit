@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  Rally
+//  Example
 //
-//  Created by Shao-Ping Lee on 4/14/16.
+//  Created by Shao-Ping Lee on 4/24/16.
 //  Copyright © 2016 Simon Lee. All rights reserved.
 //
 
