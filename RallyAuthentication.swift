@@ -14,6 +14,7 @@ import BrightFutures
 public enum RallyAuthType {
     case Username(username: String, password: String)
     case APIKey(key: String)
+    case KeyFile(filePath: String)
     
     // MARK: BA encoding
     
@@ -37,6 +38,14 @@ public enum RallyAuthType {
             completion(RallyAPICredential(key: key))
         case .Username(_):
             RallyService.authenticate(encodedBasicAuthentication, completion: { self.authenticationHandler($0, completion: completion) })
+        case .KeyFile(filePath: let filePath):
+            if let key = NSBundle.mainBundle().pathForResource(filePath, ofType: "plist")
+                .flatMap({NSDictionary(contentsOfFile: $0)})
+                .flatMap({$0["APIKey"]}) as? String {
+                completion(RallyAPICredential(key: key))
+            } else {
+                print("Cannot find a valid .plist file in \(filePath)")
+            }
         }
     }
     
@@ -54,6 +63,14 @@ public enum RallyAuthType {
                 } catch let error as NSError {
                     return Future(error: error)
                 }
+            }
+        case .KeyFile(filePath: let filePath):
+            if let key = NSBundle.mainBundle().pathForResource(filePath, ofType: "plist")
+                .flatMap({NSDictionary(contentsOfFile: $0)})
+                .flatMap({$0["APIKey"]}) as? String {
+                return Future(value: RallyAPICredential(key: key))
+            } else {
+                return Future(error: NSError(domain: "Rally", code: 1, userInfo: nil))
             }
         }
     }

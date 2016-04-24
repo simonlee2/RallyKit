@@ -26,6 +26,9 @@
 		F47341241CC2C1960044844C /* Credential.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47341231CC2C1960044844C /* Credential.swift */; };
 		F47341261CC2C2AC0044844C /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47341251CC2C2AC0044844C /* Client.swift */; };
 		F47341281CC2C2E50044844C /* RallyAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47341271CC2C2E50044844C /* RallyAuthentication.swift */; };
+		F4D3A5891CCC89C600431731 /* KanbanState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A5881CCC89C600431731 /* KanbanState.swift */; };
+		F4D3A58B1CCC89EC00431731 /* JSON+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D3A58A1CCC89EC00431731 /* JSON+Util.swift */; };
+		F4D3A58F1CCC91D700431731 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = F4D3A58E1CCC91D700431731 /* Keys.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +53,9 @@
 		F47341231CC2C1960044844C /* Credential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credential.swift; sourceTree = "<group>"; };
 		F47341251CC2C2AC0044844C /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		F47341271CC2C2E50044844C /* RallyAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RallyAuthentication.swift; sourceTree = "<group>"; };
+		F4D3A5881CCC89C600431731 /* KanbanState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KanbanState.swift; sourceTree = "<group>"; };
+		F4D3A58A1CCC89EC00431731 /* JSON+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Util.swift"; sourceTree = "<group>"; };
+		F4D3A58E1CCC91D700431731 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +120,9 @@
 				F47341271CC2C2E50044844C /* RallyAuthentication.swift */,
 				F46298AD1CCBFE9700BECEAB /* Defect.swift */,
 				F46298AF1CCC1D8000BECEAB /* RallyService+Defect.swift */,
+				F4D3A5881CCC89C600431731 /* KanbanState.swift */,
+				F4D3A58A1CCC89EC00431731 /* JSON+Util.swift */,
+				F4D3A58E1CCC91D700431731 /* Keys.plist */,
 			);
 			name = RallyKit;
 			sourceTree = "<group>";
@@ -181,6 +190,7 @@
 				F47340E21CC054330044844C /* LaunchScreen.storyboard in Resources */,
 				F47340DF1CC054330044844C /* Assets.xcassets in Resources */,
 				F47340DD1CC054330044844C /* Main.storyboard in Resources */,
+				F4D3A58F1CCC91D700431731 /* Keys.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +230,8 @@
 				F47340DA1CC054330044844C /* ViewController.swift in Sources */,
 				F47340D81CC054330044844C /* AppDelegate.swift in Sources */,
 				F46298B01CCC1D8000BECEAB /* RallyService+Defect.swift in Sources */,
+				F4D3A5891CCC89C600431731 /* KanbanState.swift in Sources */,
+				F4D3A58B1CCC89EC00431731 /* JSON+Util.swift in Sources */,
 				F46298AE1CCBFE9700BECEAB /* Defect.swift in Sources */,
 				F473411E1CC2C1120044844C /* PersistableObject.swift in Sources */,
 				F473411C1CC2C0A50044844C /* RallyService.swift in Sources */,

@@ -19,15 +19,19 @@ class ViewController: UIViewController {
     }
     @IBOutlet weak var console: UITextView!
     
-    let client = Client(authType: RallyAuthType.Username(username: "slee@solstice-consulting.com", password: "Wayla87091"))
+    let client = Client(authType: RallyAuthType.KeyFile(filePath: "Keys"))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let allMappings = KanbanState.allValues
-        
 //        let defectString = "query=((State = \"Open\") and (ScheduleState = \"In-Progress\"))"
         let projectString = "project=https://rally1.rallydev.com/slm/webservice/v2.0/project/35472160948"
+        DefectState.allValues.forEach { state in
+            self.client.defects(defectQuery(state), projectQuery: projectString).onSuccess { defects in
+                self.consoleLog("\(defects.count) in \(state.rawValue)")
+                defects.forEach({print($0.formattedID)})
+            }
+        }
         
 //        allMappings.forEach { kanbanState in
 //            self.defects(kanbanState: kanbanState, projectQuery: projectString).onSuccess { defects in
@@ -77,43 +81,13 @@ class ViewController: UIViewController {
     func defectQuery(scheduleState: ScheduleState, defectState: DefectState) -> String {
         return "query=((State = \"\(defectState.rawValue)\") and (ScheduleState = \"\(scheduleState.rawValue)\"))"
     }
+    
+    func defectQuery(defectState: DefectState) -> String {
+        return "query=(State = \"\(defectState.rawValue)\")"
+    }
 }
 
-enum KanbanState: String {
-    case Undefined = "Undefined"
-    case Defined = "Defined"
-    case DevInProgress = "Dev In-Progress"
-    case DevComplete = "Dev Complete"
-    case QAReady = "QA Ready"
-    case QAInProgress = "QA In-Progress"
-    case QAComplete = "QA Complete"
-    case Approved = "Approved"
-    
-    static var allValues: [KanbanState] {
-        return [.Undefined, .Defined, .DevInProgress, .DevComplete, .QAReady, .QAInProgress, .QAComplete, .Approved]
-    }
-    
-    var mapping: (ScheduleState, DefectState) {
-        switch self {
-        case .Undefined:
-            return (.Undefined, .Submitted)
-        case .Defined:
-            return (.Defined, .Submitted)
-        case .DevComplete:
-            return (.Completed, .Open)
-        case .DevInProgress:
-            return (.InProgress, .Open)
-        case .QAReady:
-            return (.Completed, .Fixed)
-        case .QAInProgress:
-            return (.InProgress, .Fixed)
-        case .QAComplete:
-            return (.Completed, .Closed)
-        case .Approved:
-            return (.Completed, .Approved)
-        }
-    }
-}
+
 
 extension ViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(textField: UITextField) {
@@ -171,12 +145,3 @@ extension Request {
     }
 }
 
-extension JSON {
-    var prettyString: Swift.String {
-        let data = try! self.serialize()
-        let json = try! NSJSONSerialization.JSONObjectWithData(data, options: [])
-        let prettyData = try! NSJSONSerialization.dataWithJSONObject(json, options: [.PrettyPrinted])
-        let string = NSString(data: prettyData, encoding: NSUTF8StringEncoding) ?? ""
-        return string as Swift.String
-    }
-}

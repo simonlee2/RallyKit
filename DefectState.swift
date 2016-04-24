@@ -17,4 +17,8 @@ enum DefectState: String {
     case Deferred = "Deferred"
     case KeepWatch = "Keep Watch"
     case CannotReproduce = "Cannot Reproduce"
+    
+    static var allValues: [DefectState] {
+        return [.Submitted, .Open, .Fixed, .Closed, .ReOpened, .WontFix, .Approved, .Deferred, .KeepWatch, .CannotReproduce]
+    }
 }

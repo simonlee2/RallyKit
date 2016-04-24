@@ -8,4 +8,5 @@
 
 enum RallyError: ErrorType {
     case AuthenticationError
+    case InvalidKeysFile(filePath: String)
 }
