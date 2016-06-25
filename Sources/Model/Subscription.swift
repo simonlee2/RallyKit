@@ -30,7 +30,7 @@ class Subscription: PersistableObject {
         
         apiKeysEnabled = try json.bool("ApiKeysEnabled")
         emailEnabled = try json.bool("EmailEnabled")
-        expirationDate = try json.string("ExpirationDate", ifNull: true)
+        expirationDate = try json.string("ExpirationDate", alongPath: [.NullBecomesNil])
         JSONPEnabled = try json.bool("JSONPEnabled")
         maximumCustomUserFields = try Int64(json.int("MaximumCustomUserFields"))
         maximumProjects = try Int64(json.int("MaximumProjects"))
@@ -40,7 +40,7 @@ class Subscription: PersistableObject {
         passwordExpirationDays = try Int64(json.int("PasswordExpirationDays"))
         previousPasswordCount = try Int64(json.int("PreviousPasswordCount"))
         projectHierarchyEnabled = try json.bool("ProjectHierarchyEnabled")
-        sessionTimeoutSeconds = try json.int("SessionTimeoutSeconds", ifNull: true)
+        sessionTimeoutSeconds = try json.int("SessionTimeoutSeconds", alongPath: [.NullBecomesNil])
         storyHierarchyEnabled = try json.bool("StoryHierarchyEnabled")
         storyHierarchyType = try json.string("StoryHierarchyType")
         subscriptionID = try Int64(json.int("SubscriptionID"))

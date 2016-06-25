@@ -19,12 +19,12 @@ class Artifact: JSONDecodable {
     
     required init(json: JSON) throws {
         self.artifactDescription = try json.string("Description")
-        self.displayColor = try json.string("DisplayColor", ifNull: true)
+        self.displayColor = try json.string("DisplayColor", alongPath: [.NullBecomesNil])
         self.formattedID = try json.string("FormattedID")
         self.name = try json.string("Name")
-        self.notes = try json.string("Notes", ifNull: true)
-        self.owner = try json.string("Owner", "_refObjectName", ifNull: true)
-        self.ready = try json.bool("Ready", ifNull: true)
+        self.notes = try json.string("Notes", alongPath: [.NullBecomesNil])
+        self.owner = try json.string("Owner", "_refObjectName", alongPath: [.NullBecomesNil])
+        self.ready = try json.bool("Ready", alongPath: [.NullBecomesNil])
     }
 }
 
@@ -35,10 +35,10 @@ class SchedulableArtifact: Artifact {
     var scheduleState: ScheduleState?
     
     required init(json: JSON) throws {
-        self.blocked = try json.bool("Blocked", ifNull: true)
-        self.blockedReason = try json.string("BlockedReason", ifNull: true)
+        self.blocked = try json.bool("Blocked", alongPath: [.NullBecomesNil])
+        self.blockedReason = try json.string("BlockedReason", alongPath: [.NullBecomesNil])
         self.iteration = Iteration()
-        self.scheduleState = ScheduleState(rawValue: try json.string("ScheduleState", ifNull: true) ?? "")
+        self.scheduleState = ScheduleState(rawValue: try json.string("ScheduleState", alongPath: [.NullBecomesNil]) ?? "")
         
         try super.init(json: json)
     }
@@ -54,9 +54,9 @@ class Defect: SchedulableArtifact {
     var submittedBy: User
     
     required init(json: JSON) throws {
-        self.environment = try json.string("Environment", ifNull: true)
-        self.fixedInBuild = try json.string("FixedInBuild", ifNull: true)
-        self.foundInBuild = try json.string("FoundInBuild", ifNull: true)
+        self.environment = try json.string("Environment", alongPath: [.NullBecomesNil])
+        self.fixedInBuild = try json.string("FixedInBuild", alongPath: [.NullBecomesNil])
+        self.foundInBuild = try json.string("FoundInBuild", alongPath: [.NullBecomesNil])
         self.priority = Priority(rawValue: try json.string("Priority"))
         self.severity = Severity(rawValue: try json.string("Severity"))
         self.state = DefectState(rawValue: try json.string("State"))

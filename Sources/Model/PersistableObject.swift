@@ -29,7 +29,7 @@ class PersistableObject: Attributes, JSONDecodable {
         _ref = try json.string("_ref")
         _refObjectName = try json.string("_refObjectName")
         _refObjectUUID = try json.string("_refObjectUUID")
-        _type = try json.string("_type", ifNotFound: true)
+        _type = try json.string("_type", alongPath: [.MissingKeyBecomesNil])
         
         creationDate = try json.string("CreationDate")
         objectID = try Int64(json.int("ObjectID"))

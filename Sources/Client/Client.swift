@@ -31,13 +31,13 @@ public class Client {
     func fetchDefects(queryString: String?, projectString: String?, completion: Response<NSData, NSError> -> ()) {
         let string = "?" + [queryString, projectString].flatMap({$0}).joinWithSeparator("&")
         let endpointWithQuery = "/defect" + string
-        service.get(endpointWithQuery.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!, completion: completion)
+        service.get(endpointWithQuery.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!, completion: completion)
     }
     
     func fetchDefectsAsync(queryString: String?, projectString: String?) -> Future<NSData, NSError> {
         let string = "?" + [queryString, projectString].flatMap({$0}).joinWithSeparator("&")
         let endpointWithQuery = "/defect" + string
-        return service.getAsync(endpointWithQuery.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)
+        return service.getAsync(endpointWithQuery.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!)
     }
     
     func fetchDefect(defectID: String, completion: Response<NSData, NSError> -> ()) {
